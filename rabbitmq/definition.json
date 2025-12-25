@@ -10,7 +10,7 @@
     },
     {
       "name": "user.events",
-      "vhost": "auth",
+      "vhost": "user",
       "type": "topic",
       "durable": true,
       "auto_delete": false
@@ -25,7 +25,7 @@
     },
     {
       "name": "user-events.user-creation-failed",
-      "vhost": "auth",
+      "vhost": "user",
       "durable": true,
       "auto_delete": false
     }
@@ -40,7 +40,7 @@
     },
     {
       "source": "user.events",
-      "vhost": "auth",
+      "vhost": "user",
       "destination": "user-events.user-creation-failed",
       "destination_type": "queue",
       "routing_key": "UserCreationFailedIntegrationEvent"

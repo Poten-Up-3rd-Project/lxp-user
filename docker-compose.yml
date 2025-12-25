@@ -16,7 +16,7 @@ services:
       MYSQL_PASSWORD: lxp
       MYSQL_ROOT_PASSWORD: root
     ports:
-      - "3308:3306"
+      - "3309:3306"
     volumes:
       - mysql-data:/var/lib/mysql
     healthcheck:
@@ -29,20 +29,23 @@ services:
     image: redis:7-alpine
     container_name: lxp-user-redis
     ports:
-      - "6379:6379"
+      - "6380:6379"
     volumes:
       - redis-data:/data
     restart: unless-stopped
-  rabbitmq:
+  rabbitmq-unused:
     image: rabbitmq:3.13-management
     container_name: lxp-user-rabbitmq
+    labels:
+      - "org.springframework.boot.service-connection=false"
     ports:
-      - "5672:5672"     # AMQP
-      - "15672:15672"   # Management UI
+      - "5673:5672"     # AMQP
+      - "15673:15672"   # Management UI
     environment:
       RABBITMQ_DEFAULT_USER: lxp
       RABBITMQ_DEFAULT_PASS: lxp
       RABBITMQ_DEFAULT_VHOST: user
+      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: -rabbitmq_management load_definitions "/etc/rabbitmq/definitions.json"
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq
       # 통합 로컬 대비 (지금은 없어도 됨)
