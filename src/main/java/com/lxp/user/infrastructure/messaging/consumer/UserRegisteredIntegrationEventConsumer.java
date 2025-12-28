@@ -1,4 +1,4 @@
-package com.lxp.user.infrastructure.messaging;
+package com.lxp.user.infrastructure.messaging.consumer;
 
 import com.lxp.common.application.port.in.IntegrationEventHandler;
 import com.lxp.common.application.port.out.IntegrationEventPublisher;
