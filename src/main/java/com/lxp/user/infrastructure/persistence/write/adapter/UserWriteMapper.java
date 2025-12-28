@@ -9,10 +9,11 @@ import com.lxp.user.infrastructure.persistence.write.entity.UserJpaEntity;
 import com.lxp.user.infrastructure.persistence.write.entity.UserProfileJpaEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class UserDomainMapper {
+public class UserWriteMapper {
 
     public UserJpaEntity toEntity(User user) {
         return UserJpaEntity.of(
@@ -28,7 +29,7 @@ public class UserDomainMapper {
     public UserProfileJpaEntity toEntity(UserProfile profile) {
         return UserProfileJpaEntity.builder()
             .level(InfraLevel.from(profile.level()))
-            .tags(profile.tags().values())
+            .tags(new ArrayList<>(profile.tags().values()))
             .build();
     }
 
@@ -43,9 +44,6 @@ public class UserDomainMapper {
 
     public void updateProfileEntityFromDomain(UserProfile profile, UserProfileJpaEntity existingEntity) {
         existingEntity.setLevel(InfraLevel.from(profile.level()));
-
-        List<Long> existingTags = existingEntity.getTags();
-        existingTags.clear();
-        existingTags.addAll(profile.tags().values());
+        existingEntity.changeTags(profile.tags().values());
     }
 }

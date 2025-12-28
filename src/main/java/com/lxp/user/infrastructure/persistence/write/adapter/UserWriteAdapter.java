@@ -22,14 +22,14 @@ import java.util.Objects;
 public class UserWriteAdapter implements UserCommandPort {
 
     private final UserWriteRepository userWriteRepository;
-    private final UserDomainMapper userDomainMapper;
+    private final UserWriteMapper userWriteMapper;
     private final UserProfileWriteRepository userProfileWriteRepository;
 
     @Override
     public void save(User user) {
         userWriteRepository.findById(user.id().asString()).ifPresentOrElse(
-            existingUser -> userDomainMapper.updateUserFromDomain(user, existingUser),
-            () -> userWriteRepository.save(userDomainMapper.toEntity(user))
+            existingUser -> userWriteMapper.updateUserFromDomain(user, existingUser),
+            () -> userWriteRepository.save(userWriteMapper.toEntity(user))
         );
     }
 
@@ -39,16 +39,16 @@ public class UserWriteAdapter implements UserCommandPort {
             .orElse(null);
 
         if (Objects.nonNull(userEntity)) {
-            userDomainMapper.updateUserFromDomain(user, userEntity);
+            userWriteMapper.updateUserFromDomain(user, userEntity);
             UserProfileJpaEntity profileEntity = userProfileWriteRepository.findByUserWithTags(userEntity)
                 .orElseThrow(ProfileNotFoundException::new);
 
-            userDomainMapper.updateProfileEntityFromDomain(user.profile(), profileEntity);
+            userWriteMapper.updateProfileEntityFromDomain(user.profile(), profileEntity);
         } else {
-            UserJpaEntity newUser = userDomainMapper.toEntity(user);
+            UserJpaEntity newUser = userWriteMapper.toEntity(user);
             userWriteRepository.save(newUser);
 
-            UserProfileJpaEntity newProfile = userDomainMapper.toEntity(user.profile());
+            UserProfileJpaEntity newProfile = userWriteMapper.toEntity(user.profile());
             newProfile.setUser(newUser);
             userProfileWriteRepository.save(newProfile);
         }
@@ -58,7 +58,7 @@ public class UserWriteAdapter implements UserCommandPort {
     public void deactivate(User user) {
         UserJpaEntity userEntity = userWriteRepository.findById(user.id().asString())
             .orElseThrow(UserNotFoundException::new);
-        userDomainMapper.updateUserFromDomain(user, userEntity);
+        userWriteMapper.updateUserFromDomain(user, userEntity);
     }
 
 }

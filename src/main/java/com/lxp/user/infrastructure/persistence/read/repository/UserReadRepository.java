@@ -27,10 +27,10 @@ public interface UserReadRepository extends JpaRepository<UserJpaEntity, String>
 
     @Query(value = """
         SELECT new com.lxp.user.infrastructure.persistence.read.dto.UserDetailDto(
-            u.id, u.name, u.email, u.role, u.userStatus,p.level, p.tags, u.createdAt, u.deletedAt
+            u.id, u.name, u.email, u.role, u.userStatus,p.level, u.createdAt, u.deletedAt
         )
         FROM UserJpaEntity u
-        LEFT JOIN UserProfileJpaEntity p ON p.user.id = u.id
+        LEFT JOIN UserProfileJpaEntity p ON p.user = u
         WHERE u.id = :userId
         """)
     Optional<UserDetailDto> findUserDetailById(@Param("userId") String userId);
@@ -40,10 +40,10 @@ public interface UserReadRepository extends JpaRepository<UserJpaEntity, String>
 
     @Query("""
         SELECT new com.lxp.user.infrastructure.persistence.read.dto.UserDetailDto(
-            u.id, u.name, u.email, u.role, u.userStatus, p.level, p.tags, u.createdAt, u.deletedAt
+            u.id, u.name, u.email, u.role, u.userStatus, p.level, u.createdAt, u.deletedAt
         )
         FROM UserJpaEntity u
-        LEFT JOIN UserProfileJpaEntity p ON p.user.id = u.id
+        LEFT JOIN UserProfileJpaEntity p ON p.user = u
         WHERE u.email = :email
         """)
     Optional<UserDetailDto> findUserDetailByEmail(@Param("email") String email);
@@ -75,4 +75,7 @@ public interface UserReadRepository extends JpaRepository<UserJpaEntity, String>
     Optional<UserProfileJpaEntity> findProfileWithTagsByEmail(@Param("email") String email);
 
     Optional<UserJpaEntity> findByEmail(String email);
+
+    @Query("SELECT p.tags FROM UserProfileJpaEntity p WHERE p.user.id = :userId")
+    List<Long> findTagsByUserId(@Param("userId") String userId);
 }

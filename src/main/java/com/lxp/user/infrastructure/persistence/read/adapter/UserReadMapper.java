@@ -12,6 +12,8 @@ import com.lxp.user.infrastructure.persistence.write.entity.UserJpaEntity;
 import com.lxp.user.infrastructure.persistence.write.entity.UserProfileJpaEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class UserReadMapper {
 
@@ -27,9 +29,9 @@ public class UserReadMapper {
         );
     }
 
-    public User toDomainWithProfile(UserDetailDto userDetailDto) {
+    public User toDomainWithProfile(UserDetailDto userDetailDto, List<Long> tags) {
         UserId userId = UserId.of(userDetailDto.id());
-        UserProfile userProfile = toProfile(userDetailDto, userId);
+        UserProfile userProfile = toProfile(userDetailDto, userId, tags);
 
         return User.of(
             userId,
@@ -43,11 +45,11 @@ public class UserReadMapper {
     }
 
 
-    public UserProfile toProfile(UserDetailDto userDetailDto, UserId userId) {
+    public UserProfile toProfile(UserDetailDto userDetailDto, UserId userId, List<Long> tags) {
         return UserProfile.create(
             userId,
             userDetailDto.level().toDomain(),
-            new Tags(userDetailDto.tags()));
+            new Tags(tags));
     }
 
     public User toDomain(UserJpaEntity userEntity, UserProfileJpaEntity profileEntity) {

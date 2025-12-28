@@ -27,6 +27,7 @@ import org.hibernate.annotations.BatchSize;
 import org.springframework.data.domain.Persistable;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 @Getter
@@ -49,7 +50,6 @@ public class UserProfileJpaEntity extends BaseJpaEntity implements Persistable<L
     @Enumerated(EnumType.STRING)
     private InfraLevel level;
 
-    @Setter
     @ElementCollection
     @CollectionTable(
         name = "profile_tags",
@@ -68,6 +68,17 @@ public class UserProfileJpaEntity extends BaseJpaEntity implements Persistable<L
         this.user = user;
         this.level = level;
         this.tags = tags;
+    }
+
+    public void changeTags(List<Long> newTags) {
+        List<Long> incoming = (newTags == null) ? new ArrayList<>() : new ArrayList<>(newTags);
+
+        if (this.tags.size() == incoming.size() && new HashSet<>(this.tags).containsAll(incoming)) {
+            return;
+        }
+
+        this.tags.clear();
+        this.tags.addAll(incoming);
     }
 
     @Override

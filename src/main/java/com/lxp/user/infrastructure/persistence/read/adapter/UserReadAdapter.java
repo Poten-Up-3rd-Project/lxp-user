@@ -40,7 +40,10 @@ public class UserReadAdapter implements UserQueryPort {
     @Override
     public Optional<User> findAggregateUserById(UserId userId) {
         return userReadRepository.findUserDetailById(userId.asString())
-            .map(userReadMapper::toDomainWithProfile);
+            .map(detailDto -> userReadMapper.toDomainWithProfile(
+                detailDto,
+                userReadRepository.findTagsByUserId(userId.asString())
+            ));
     }
 
     /**
@@ -74,7 +77,10 @@ public class UserReadAdapter implements UserQueryPort {
     @Override
     public Optional<User> findAggregateUserByEmail(String email) {
         return userReadRepository.findUserDetailByEmail(email)
-            .map(userReadMapper::toDomainWithProfile);
+            .map(detailDto -> userReadMapper.toDomainWithProfile(
+                detailDto,
+                userReadRepository.findTagsByUserId(detailDto.id())
+            ));
     }
 
     /**
