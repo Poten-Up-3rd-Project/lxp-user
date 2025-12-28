@@ -1,6 +1,7 @@
 package com.lxp.user.domain.user.model.vo;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -9,6 +10,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @DisplayName("User VO 테스트")
 class UserVOTest {
 
+    @Nested
     @DisplayName("UserName 테스트")
     class UserNameTest {
 
@@ -60,6 +62,7 @@ class UserVOTest {
         }
     }
 
+    @Nested
     @DisplayName("UserEmail 테스트")
     class UserEmailTest {
 
@@ -107,6 +110,7 @@ class UserVOTest {
         }
     }
 
+    @Nested
     @DisplayName("UserRole 테스트")
     class UserRoleTest {
 
@@ -135,6 +139,7 @@ class UserVOTest {
         }
     }
 
+    @Nested
     @DisplayName("UserStatus 테스트")
     class UserStatusTest {
 
