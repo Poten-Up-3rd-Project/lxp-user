@@ -1,12 +1,13 @@
 package com.lxp.user.domain.common.model.vo;
 
-import java.util.Objects;
+import com.lxp.user.domain.common.support.UserGuard;
+
 import java.util.UUID;
 
 public record UserId(UUID value) {
 
     public UserId {
-        Objects.requireNonNull(value, "userId는 null일 수 없습니다.");
+        UserGuard.requireNonNull(value, "userId는 null일 수 없습니다.");
     }
 
     public static UserId create() {

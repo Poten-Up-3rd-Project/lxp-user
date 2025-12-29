@@ -2,10 +2,10 @@ package com.lxp.user.domain.profile.model.entity;
 
 import com.lxp.user.domain.common.model.vo.Level;
 import com.lxp.user.domain.common.model.vo.UserId;
+import com.lxp.user.domain.common.support.UserGuard;
 import com.lxp.user.domain.profile.model.vo.Tags;
 
 import java.util.List;
-import java.util.Objects;
 
 public class UserProfile {
 
@@ -14,9 +14,9 @@ public class UserProfile {
     private Tags tags;
 
     private UserProfile(UserId userId, Level level, Tags tags) {
-        this.userId = Objects.requireNonNull(userId, "userId는 null일 수 없습니다.");
-        this.level = Objects.requireNonNull(level, "level은 null일 수 없습니다.");
-        this.tags = Objects.requireNonNull(tags, "tags는 null일 수 없습니다.");
+        this.userId = UserGuard.requireNonNull(userId, "userId는 null일 수 없습니다.");
+        this.level = UserGuard.requireNonNull(level, "level은 null일 수 없습니다.");
+        this.tags = UserGuard.requireNonNull(tags, "tags는 null일 수 없습니다.");
     }
 
     public static UserProfile create(UserId userId, Level level, Tags tags) {
