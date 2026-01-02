@@ -1,0 +1,54 @@
+version: "3.9"
+name: lxp-user-local
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: lxp-user-mysql
+    command:
+      - --default-authentication-plugin=mysql_native_password
+      - --skip-ssl
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --default-time-zone=Asia/Seoul
+    environment:
+      MYSQL_DATABASE: lxp_user
+      MYSQL_USER: lxp
+      MYSQL_PASSWORD: lxp
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "lxp", "-plxp"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+  redis:
+    image: redis:7-alpine
+    container_name: lxp-user-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    container_name: lxp-user-rabbitmq
+    ports:
+      - "5672:5672"     # AMQP
+      - "15672:15672"   # Management UI
+    environment:
+      RABBITMQ_DEFAULT_USER: lxp
+      RABBITMQ_DEFAULT_PASS: lxp
+      RABBITMQ_DEFAULT_VHOST: user
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+      # 통합 로컬 대비 (지금은 없어도 됨)
+      - ./rabbitmq/definitions.json:/etc/rabbitmq/definitions.json:ro
+    restart: unless-stopped
+volumes:
+  mysql-data:
+  redis-data:
+  rabbitmq-data:
