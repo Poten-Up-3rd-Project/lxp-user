@@ -1,6 +1,5 @@
 package com.lxp.user.infrastructure.web.external.passport.config;
 
-import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.security.KeyFactory;
@@ -13,12 +12,8 @@ public class KeyProperties {
 
     private String publicKeyString;
 
-    @Getter
-    private int durationMillis;
-
-    public KeyProperties(String publicKeyString, int durationMillis) {
+    public KeyProperties(String publicKeyString) {
         this.publicKeyString = publicKeyString;
-        this.durationMillis = durationMillis;
     }
 
     public PublicKey getPublicKey() throws Exception {
