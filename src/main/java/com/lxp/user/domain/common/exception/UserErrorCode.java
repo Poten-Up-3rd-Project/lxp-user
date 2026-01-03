@@ -16,7 +16,9 @@ public enum UserErrorCode implements ErrorCode {
 
     USER_INACTIVE("FORBIDDEN", "USER_008", "사용자 계정이 비활성화 상태이므로 요청된 작업을 수행할 수 없습니다."),
 
-    MISSING_REQUIRED_FIELD("BAD_REQUEST", "USER_009", "필수 입력 항목이 누락되었습니다.");
+    MISSING_REQUIRED_FIELD("BAD_REQUEST", "USER_009", "필수 입력 항목이 누락되었습니다."),
+
+    UNAUTHORIZED_ACCESS("UNAUTHORIZED", "USER_010", "유효하지 않거나 만료된 토큰입니다.");
 
     private final String group;
     private final String code;
