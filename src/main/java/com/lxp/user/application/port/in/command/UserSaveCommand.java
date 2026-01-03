@@ -1,4 +1,4 @@
-package com.lxp.user.application.in.command;
+package com.lxp.user.application.port.in.command;
 
 import com.lxp.common.application.cqrs.Command;
 import com.lxp.user.domain.user.exception.UserRoleNotFoundException;

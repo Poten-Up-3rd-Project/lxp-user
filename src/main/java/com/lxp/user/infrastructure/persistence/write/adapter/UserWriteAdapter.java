@@ -1,6 +1,6 @@
 package com.lxp.user.infrastructure.persistence.write.adapter;
 
-import com.lxp.user.application.out.UserCommandPort;
+import com.lxp.user.application.port.out.UserCommandPort;
 import com.lxp.user.domain.common.exception.UserNotFoundException;
 import com.lxp.user.domain.profile.exception.ProfileNotFoundException;
 import com.lxp.user.domain.user.model.entity.User;

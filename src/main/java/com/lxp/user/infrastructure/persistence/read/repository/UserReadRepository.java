@@ -66,14 +66,21 @@ public interface UserReadRepository extends JpaRepository<UserJpaEntity, String>
         """)
     Optional<UserSummaryDto> findUserSummaryByEmail(@Param("email") String email);
 
+
+    // -----------------------------------------------------------
+
+
+    @Deprecated
     @EntityGraph(attributePaths = {"user", "tags"})
     @Query("SELECT p FROM UserProfileJpaEntity p WHERE p.user.id = :userId")
     Optional<UserProfileJpaEntity> findProfileWithTagsByUserId(@Param("userId") String userId);
 
+    @Deprecated
     @EntityGraph(attributePaths = {"user", "tags"})
     @Query("SELECT p FROM UserProfileJpaEntity p WHERE p.user.email = :email")
     Optional<UserProfileJpaEntity> findProfileWithTagsByEmail(@Param("email") String email);
 
+    @Deprecated
     Optional<UserJpaEntity> findByEmail(String email);
 
     @Query("SELECT p.tags FROM UserProfileJpaEntity p WHERE p.user.id = :userId")

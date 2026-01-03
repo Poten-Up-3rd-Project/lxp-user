@@ -1,8 +1,9 @@
 package com.lxp.user.infrastructure.persistence.read.adapter;
 
-import com.lxp.user.application.out.UserQueryPort;
+import com.lxp.user.application.port.out.UserQueryPort;
+import com.lxp.user.application.port.out.query.UserView;
+import com.lxp.user.application.port.out.query.UserWithProfileView;
 import com.lxp.user.domain.common.model.vo.UserId;
-import com.lxp.user.domain.user.model.entity.User;
 import com.lxp.user.domain.user.model.vo.UserStatus;
 import com.lxp.user.infrastructure.persistence.read.repository.UserReadRepository;
 import com.lxp.user.infrastructure.persistence.write.entity.UserJpaEntity;
@@ -22,13 +23,13 @@ public class UserReadAdapter implements UserQueryPort {
     private final UserReadMapper userReadMapper;
 
     @Override
-    public Optional<User> getUserById(String id) {
-        return userReadRepository.findUserSummaryById(id).map(userReadMapper::toDomain);
+    public Optional<UserView> getUserById(String id) {
+        return userReadRepository.findUserSummaryById(id).map(userReadMapper::toUserView);
     }
 
     @Override
-    public Optional<User> getUserByEmail(String email) {
-        return userReadRepository.findUserSummaryByEmail(email).map(userReadMapper::toDomain);
+    public Optional<UserView> getUserByEmail(String email) {
+        return userReadRepository.findUserSummaryByEmail(email).map(userReadMapper::toUserView);
     }
 
     @Override
@@ -38,13 +39,25 @@ public class UserReadAdapter implements UserQueryPort {
     }
 
     @Override
-    public Optional<User> findAggregateUserById(UserId userId) {
+    public Optional<UserWithProfileView> findAggregateUserById(UserId userId) {
         return userReadRepository.findUserDetailById(userId.asString())
-            .map(detailDto -> userReadMapper.toDomainWithProfile(
+            .map(detailDto -> userReadMapper.toUserWithProfileView(
                 detailDto,
                 userReadRepository.findTagsByUserId(userId.asString())
             ));
     }
+
+    @Override
+    public Optional<UserWithProfileView> findAggregateUserByEmail(String email) {
+        return userReadRepository.findUserDetailByEmail(email)
+            .map(detailDto -> userReadMapper.toUserWithProfileView(
+                detailDto,
+                userReadRepository.findTagsByUserId(detailDto.id())
+            ));
+    }
+
+
+    // -----------------------------------------------------------
 
     /**
      * [Performance Alternative] EntityGraph 기반 Aggregate 로딩 로직
@@ -59,7 +72,7 @@ public class UserReadAdapter implements UserQueryPort {
      * 완전한 상태 보존에 우선순위를 둔 방식입니다.
      */
     @Deprecated
-    public Optional<User> findAggregateUserByIdWithEntityGraph(UserId userId) {
+    public Optional<UserWithProfileView> findAggregateUserByIdWithEntityGraph(UserId userId) {
         UserJpaEntity userEntity = userReadRepository.findById(userId.asString())
             .orElse(null);
 
@@ -71,16 +84,7 @@ public class UserReadAdapter implements UserQueryPort {
             .findProfileWithTagsByUserId(userId.asString())
             .orElse(null);
 
-        return Optional.of(userReadMapper.toDomain(userEntity, profileEntity));
-    }
-
-    @Override
-    public Optional<User> findAggregateUserByEmail(String email) {
-        return userReadRepository.findUserDetailByEmail(email)
-            .map(detailDto -> userReadMapper.toDomainWithProfile(
-                detailDto,
-                userReadRepository.findTagsByUserId(detailDto.id())
-            ));
+        return Optional.of(userReadMapper.toUserWithProfileView(userEntity, profileEntity));
     }
 
     /**
@@ -97,7 +101,7 @@ public class UserReadAdapter implements UserQueryPort {
      * 완전한 상태 보존에 우선순위를 둔 방식입니다.
      */
     @Deprecated
-    public Optional<User> findAggregateUserByEmailWithEntityGraph(String email) {
+    public Optional<UserWithProfileView> findAggregateUserByEmailWithEntityGraph(String email) {
         UserJpaEntity userEntity = userReadRepository.findByEmail(email)
             .orElse(null);
 
@@ -109,7 +113,7 @@ public class UserReadAdapter implements UserQueryPort {
             .findProfileWithTagsByEmail(email)
             .orElse(null);
 
-        return Optional.of(userReadMapper.toDomain(userEntity, profileEntity));
+        return Optional.of(userReadMapper.toUserWithProfileView(userEntity, profileEntity));
     }
 
 }
