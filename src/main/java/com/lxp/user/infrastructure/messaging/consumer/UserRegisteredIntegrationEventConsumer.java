@@ -4,7 +4,7 @@ import com.lxp.common.application.port.in.IntegrationEventHandler;
 import com.lxp.common.application.port.out.IntegrationEventPublisher;
 import com.lxp.user.application.event.UserCreationFailedIntegrationEvent;
 import com.lxp.user.application.event.UserRegisteredIntegrationEvent;
-import com.lxp.user.application.in.usecase.UserSaveUseCase;
+import com.lxp.user.application.port.in.usecase.UserSaveUseCase;
 import com.lxp.user.infrastructure.messaging.mapper.IntegrationEventMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,7 +1,7 @@
 package com.lxp.user.application.service;
 
-import com.lxp.user.application.in.command.UserSaveCommand;
-import com.lxp.user.application.in.usecase.UserSaveUseCase;
+import com.lxp.user.application.port.in.command.UserSaveCommand;
+import com.lxp.user.application.port.in.usecase.UserSaveUseCase;
 import com.lxp.user.domain.user.model.entity.User;
 import com.lxp.user.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;

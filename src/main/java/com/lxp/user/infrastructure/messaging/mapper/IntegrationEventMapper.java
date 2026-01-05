@@ -2,7 +2,7 @@ package com.lxp.user.infrastructure.messaging.mapper;
 
 import com.lxp.user.application.event.UserCreationFailedIntegrationEvent;
 import com.lxp.user.application.event.UserRegisteredIntegrationEvent;
-import com.lxp.user.application.in.command.UserSaveCommand;
+import com.lxp.user.application.port.in.command.UserSaveCommand;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
