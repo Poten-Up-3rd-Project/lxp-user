@@ -1,5 +1,6 @@
 package com.lxp.user.domain.user.model.entity;
 
+import com.lxp.user.domain.common.exception.UserException;
 import com.lxp.user.domain.common.model.vo.Level;
 import com.lxp.user.domain.common.model.vo.UserId;
 import com.lxp.user.domain.profile.model.entity.UserProfile;
@@ -11,6 +12,7 @@ import com.lxp.user.domain.user.model.vo.UserStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,7 +32,7 @@ class UserTest {
         UserProfile profile = UserProfile.create(
             userId,
             Level.JUNIOR,
-            new Tags(List.of(1L, 2L, 3L))
+            new Tags(new ArrayList<>(List.of(1L, 2L, 3L)))
         );
 
         // when
@@ -98,22 +100,22 @@ class UserTest {
         // then
         assertThatThrownBy(() ->
             User.of(null, userName, userEmail, UserRole.LEARNER, UserStatus.ACTIVE, null, null)
-        ).isInstanceOf(NullPointerException.class)
+        ).isInstanceOf(UserException.class)
             .hasMessageContaining("userId는 null일 수 없습니다");
 
         assertThatThrownBy(() ->
             User.of(userId, null, userEmail, UserRole.LEARNER, UserStatus.ACTIVE, null, null)
-        ).isInstanceOf(NullPointerException.class)
+        ).isInstanceOf(UserException.class)
             .hasMessageContaining("userName은 null일 수 없습니다");
 
         assertThatThrownBy(() ->
             User.of(userId, userName, null, UserRole.LEARNER, UserStatus.ACTIVE, null, null)
-        ).isInstanceOf(NullPointerException.class)
+        ).isInstanceOf(UserException.class)
             .hasMessageContaining("userEmail은 null일 수 없습니다");
 
         assertThatThrownBy(() ->
             User.of(userId, userName, userEmail, null, UserStatus.ACTIVE, null, null)
-        ).isInstanceOf(NullPointerException.class)
+        ).isInstanceOf(UserException.class)
             .hasMessageContaining("userRole은 null일 수 없습니다");
     }
 
