@@ -1,9 +1,10 @@
 package com.lxp.user.infrastructure.persistence.read.adapter;
 
-import com.lxp.user.application.port.out.UserQueryPort;
-import com.lxp.user.application.port.out.query.UserView;
-import com.lxp.user.application.port.out.query.UserWithProfileView;
+import com.lxp.user.application.port.required.UserQueryPort;
+import com.lxp.user.application.port.required.query.UserView;
+import com.lxp.user.application.port.required.query.UserWithProfileView;
 import com.lxp.user.domain.common.model.vo.UserId;
+import com.lxp.user.domain.user.model.vo.UserEmail;
 import com.lxp.user.domain.user.model.vo.UserStatus;
 import com.lxp.user.infrastructure.persistence.read.repository.UserReadRepository;
 import com.lxp.user.infrastructure.persistence.write.entity.UserJpaEntity;
@@ -23,13 +24,13 @@ public class UserReadAdapter implements UserQueryPort {
     private final UserReadMapper userReadMapper;
 
     @Override
-    public Optional<UserView> getUserById(String id) {
-        return userReadRepository.findUserSummaryById(id).map(userReadMapper::toUserView);
+    public Optional<UserView> getUserById(UserId id) {
+        return userReadRepository.findUserSummaryById(id.asString()).map(userReadMapper::toUserView);
     }
 
     @Override
-    public Optional<UserView> getUserByEmail(String email) {
-        return userReadRepository.findUserSummaryByEmail(email).map(userReadMapper::toUserView);
+    public Optional<UserView> getUserByEmail(UserEmail email) {
+        return userReadRepository.findUserSummaryByEmail(email.value()).map(userReadMapper::toUserView);
     }
 
     @Override
@@ -48,8 +49,8 @@ public class UserReadAdapter implements UserQueryPort {
     }
 
     @Override
-    public Optional<UserWithProfileView> findAggregateUserByEmail(String email) {
-        return userReadRepository.findUserDetailByEmail(email)
+    public Optional<UserWithProfileView> findAggregateUserByEmail(UserEmail email) {
+        return userReadRepository.findUserDetailByEmail(email.value())
             .map(detailDto -> userReadMapper.toUserWithProfileView(
                 detailDto,
                 userReadRepository.findTagsByUserId(detailDto.id())

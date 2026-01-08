@@ -1,4 +1,4 @@
-package com.lxp.user.infrastructure.messaging.publisher;
+package com.lxp.user.infrastructure.messaging.producer;
 
 import com.lxp.common.application.event.IntegrationEvent;
 import com.lxp.common.application.port.out.IntegrationEventPublisher;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class UserIntegrationEventPublisher implements IntegrationEventPublisher {
+public class UserIntegrationEventProducer implements IntegrationEventPublisher {
 
     private static final String EXCHANGE_NAME = "user.events";
 

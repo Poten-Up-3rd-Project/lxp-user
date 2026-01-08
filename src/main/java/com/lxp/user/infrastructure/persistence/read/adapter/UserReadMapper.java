@@ -1,7 +1,7 @@
 package com.lxp.user.infrastructure.persistence.read.adapter;
 
-import com.lxp.user.application.port.out.query.UserView;
-import com.lxp.user.application.port.out.query.UserWithProfileView;
+import com.lxp.user.application.port.required.query.UserView;
+import com.lxp.user.application.port.required.query.UserWithProfileView;
 import com.lxp.user.domain.common.model.vo.UserId;
 import com.lxp.user.domain.user.model.vo.UserEmail;
 import com.lxp.user.domain.user.model.vo.UserName;
