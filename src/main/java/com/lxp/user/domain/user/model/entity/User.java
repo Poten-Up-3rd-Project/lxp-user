@@ -70,6 +70,10 @@ public class User extends AggregateRoot<UserId> {
         }
     }
 
+    public boolean hasProfile() {
+        return this.userProfile != null;
+    }
+
     public boolean canManageOwnCourse() {
         return this.role == UserRole.INSTRUCTOR || this.role == UserRole.ADMIN;
     }

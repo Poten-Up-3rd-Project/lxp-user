@@ -1,4 +1,4 @@
-package com.lxp.user.application.port.out;
+package com.lxp.user.application.port.required;
 
 import com.lxp.user.domain.user.model.entity.User;
 

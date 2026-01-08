@@ -18,7 +18,10 @@ public enum UserErrorCode implements ErrorCode {
 
     MISSING_REQUIRED_FIELD("BAD_REQUEST", "USER_009", "필수 입력 항목이 누락되었습니다."),
 
-    UNAUTHORIZED_ACCESS("UNAUTHORIZED", "USER_010", "유효하지 않거나 만료된 토큰입니다.");
+    UNAUTHORIZED_ACCESS("UNAUTHORIZED", "USER_010", "유효하지 않거나 만료된 토큰입니다."),
+    INTERNAL_ERROR("INTERNAL_SERVER_ERROR", "USER_011", "Internal Server Error."),
+    EXTERNAL_SERVICE_ERROR("INTERNAL_SERVER_ERROR", "USER_012", "외부 서비스 연동 중 오류가 발생했습니다."),
+    ;
 
     private final String group;
     private final String code;

@@ -7,9 +7,9 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 
 @Getter
-public class UserRegisteredIntegrationEvent extends BaseIntegrationEventEnvelope<UserPayload> {
+public class UserRoleUpdatedIntegrationEvent extends BaseIntegrationEventEnvelope<UserPayload> {
 
-    public UserRegisteredIntegrationEvent(String eventId, LocalDateTime occurredAt, String source, String correlationId, String causationId, UserPayload payload) {
+    public UserRoleUpdatedIntegrationEvent(String eventId, LocalDateTime occurredAt, String source, String correlationId, String causationId, UserPayload payload) {
         super(eventId, occurredAt, source, correlationId, causationId, payload);
     }
 }

@@ -1,4 +1,4 @@
-package com.lxp.user.application.port.out.query;
+package com.lxp.user.application.port.required.query;
 
 import com.lxp.user.domain.common.model.vo.Level;
 import com.lxp.user.domain.common.model.vo.UserId;

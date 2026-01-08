@@ -1,4 +1,4 @@
-package com.lxp.user.application.port.in.command;
+package com.lxp.user.application.port.provided.command;
 
 import com.lxp.common.application.cqrs.Command;
 import com.lxp.user.domain.user.exception.UserRoleNotFoundException;
@@ -7,7 +7,7 @@ import com.lxp.user.domain.user.service.spec.UserSaveSpec;
 
 import java.util.List;
 
-public record UserSaveCommand(
+public record UserSaveInternalCommand(
     String userId,
     String email,
     String name,
