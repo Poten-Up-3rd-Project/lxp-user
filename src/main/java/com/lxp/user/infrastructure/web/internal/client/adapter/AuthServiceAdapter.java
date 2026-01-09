@@ -1,15 +1,15 @@
-package com.lxp.user.infrastructure.web.external.client.adapter;
+package com.lxp.user.infrastructure.web.internal.client.adapter;
 
 import com.lxp.user.application.port.required.AuthServicePort;
 import com.lxp.user.application.port.required.dto.AuthRegeneratedTokenRequest;
 import com.lxp.user.application.port.required.query.AuthRegeneratedTokenResult;
 import com.lxp.user.domain.common.exception.UserErrorCode;
 import com.lxp.user.domain.common.exception.UserException;
-import com.lxp.user.infrastructure.web.external.client.AuthServiceFeignClient;
-import com.lxp.user.infrastructure.web.external.client.dto.RegenerateTokenRequest;
-import com.lxp.user.infrastructure.web.external.client.dto.RevokeTokenRequest;
-import com.lxp.user.infrastructure.web.external.client.dto.TokenResponse;
-import com.lxp.user.infrastructure.web.external.client.support.ResponseUnwrapper;
+import com.lxp.user.infrastructure.web.internal.client.AuthServiceFeignClient;
+import com.lxp.user.infrastructure.web.internal.client.dto.RegenerateTokenRequest;
+import com.lxp.user.infrastructure.web.internal.client.dto.RevokeTokenRequest;
+import com.lxp.user.infrastructure.web.internal.client.dto.TokenResponse;
+import com.lxp.user.infrastructure.web.internal.client.support.ResponseUnwrapper;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

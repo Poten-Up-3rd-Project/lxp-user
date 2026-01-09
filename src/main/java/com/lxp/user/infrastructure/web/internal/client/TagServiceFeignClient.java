@@ -1,6 +1,6 @@
-package com.lxp.user.infrastructure.web.external.client;
+package com.lxp.user.infrastructure.web.internal.client;
 
-import com.lxp.user.infrastructure.web.external.client.dto.TagListResponse;
+import com.lxp.user.infrastructure.web.internal.client.dto.TagListResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

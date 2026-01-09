@@ -1,4 +1,4 @@
-package com.lxp.user.infrastructure.web.external.client.intercepter;
+package com.lxp.user.infrastructure.web.internal.client.intercepter;
 
 import com.lxp.user.infrastructure.constants.PassportConstants;
 import feign.RequestInterceptor;

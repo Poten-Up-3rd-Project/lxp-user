@@ -1,4 +1,4 @@
-package com.lxp.user.infrastructure.web.internal.dto;
+package com.lxp.user.infrastructure.web.internal.controller.dto;
 
 import java.util.List;
 

@@ -1,11 +1,11 @@
-package com.lxp.user.infrastructure.web.internal;
+package com.lxp.user.infrastructure.web.internal.controller;
 
+import com.lxp.user.application.port.provided.dto.UserInfoInternalResult;
 import com.lxp.user.application.port.provided.usecase.UserFindInternalUseCase;
 import com.lxp.user.application.port.provided.usecase.UserSaveUseCase;
-import com.lxp.user.application.port.provided.dto.UserInfoInternalResult;
-import com.lxp.user.infrastructure.web.internal.dto.UserInfoResponse;
-import com.lxp.user.infrastructure.web.internal.dto.UserSaveRequest;
-import com.lxp.user.infrastructure.web.internal.mapper.UserInternalMapper;
+import com.lxp.user.infrastructure.web.internal.controller.dto.UserInfoResponse;
+import com.lxp.user.infrastructure.web.internal.controller.dto.UserSaveRequest;
+import com.lxp.user.infrastructure.web.internal.controller.mapper.UserInternalMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

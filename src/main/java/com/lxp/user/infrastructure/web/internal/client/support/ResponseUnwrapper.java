@@ -1,4 +1,4 @@
-package com.lxp.user.infrastructure.web.external.client.support;
+package com.lxp.user.infrastructure.web.internal.client.support;
 
 import com.lxp.user.domain.common.exception.UserErrorCode;
 import com.lxp.user.domain.common.exception.UserException;

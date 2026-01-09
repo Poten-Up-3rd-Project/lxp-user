@@ -1,8 +1,8 @@
-package com.lxp.user.infrastructure.web.external.client;
+package com.lxp.user.infrastructure.web.internal.client;
 
-import com.lxp.user.infrastructure.web.external.client.dto.RegenerateTokenRequest;
-import com.lxp.user.infrastructure.web.external.client.dto.RevokeTokenRequest;
-import com.lxp.user.infrastructure.web.external.client.dto.TokenResponse;
+import com.lxp.user.infrastructure.web.internal.client.dto.RegenerateTokenRequest;
+import com.lxp.user.infrastructure.web.internal.client.dto.RevokeTokenRequest;
+import com.lxp.user.infrastructure.web.internal.client.dto.TokenResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
