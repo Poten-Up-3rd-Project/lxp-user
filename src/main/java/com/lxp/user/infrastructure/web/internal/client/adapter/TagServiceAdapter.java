@@ -6,7 +6,7 @@ import com.lxp.user.domain.common.exception.UserErrorCode;
 import com.lxp.user.domain.common.exception.UserException;
 import com.lxp.user.infrastructure.web.internal.client.TagServiceFeignClient;
 import com.lxp.user.infrastructure.web.internal.client.dto.TagListResponse;
-import com.lxp.user.infrastructure.web.internal.client.support.ResponseUnwrapper;
+import com.lxp.user.infrastructure.web.internal.client.support.ResponseAssertions;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ public class TagServiceAdapter implements TagServicePort {
     @Override
     @CircuitBreaker(name = "tagService", fallbackMethod = "findTagsFallback")
     public List<TagResult> findTags(List<Long> ids) {
-        TagListResponse tagListResponse = ResponseUnwrapper.unwrapResponse(tagServiceFeignClient.findTags(ids));
+        TagListResponse tagListResponse = ResponseAssertions.getBodyIf2xx(tagServiceFeignClient.findTags(ids));
 
         List<TagResult> tagResults = tagListResponse.tags().stream().map(tag ->
             new TagResult(tag.id(), tag.name(), tag.color(), tag.variant())

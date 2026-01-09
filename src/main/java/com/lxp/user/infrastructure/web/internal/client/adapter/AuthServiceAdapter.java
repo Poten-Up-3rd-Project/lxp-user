@@ -9,7 +9,7 @@ import com.lxp.user.infrastructure.web.internal.client.AuthServiceFeignClient;
 import com.lxp.user.infrastructure.web.internal.client.dto.RegenerateTokenRequest;
 import com.lxp.user.infrastructure.web.internal.client.dto.RevokeTokenRequest;
 import com.lxp.user.infrastructure.web.internal.client.dto.TokenResponse;
-import com.lxp.user.infrastructure.web.internal.client.support.ResponseUnwrapper;
+import com.lxp.user.infrastructure.web.internal.client.support.ResponseAssertions;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +25,7 @@ public class AuthServiceAdapter implements AuthServicePort {
     @Override
     @CircuitBreaker(name = "authService", fallbackMethod = "regenerateTokenFallBack")
     public AuthRegeneratedTokenResult getRegeneratedToken(AuthRegeneratedTokenCommand request) {
-        TokenResponse tokenResponse = ResponseUnwrapper.unwrapResponse(authServiceFeignClient.regenerateToken(
+        TokenResponse tokenResponse = ResponseAssertions.getBodyIf2xx(authServiceFeignClient.regenerateToken(
             new RegenerateTokenRequest(request.role())
         ));
 
@@ -35,7 +35,7 @@ public class AuthServiceAdapter implements AuthServicePort {
     @Override
     @CircuitBreaker(name = "authService", fallbackMethod = "revokeTokenFallBack")
     public void revokeToken(String token) {
-        ResponseUnwrapper.unwrapResponse(authServiceFeignClient.revokeToken(new RevokeTokenRequest(token)));
+        ResponseAssertions.ensure2xx(authServiceFeignClient.revokeToken(new RevokeTokenRequest(token)));
         log.info("Revoke token successfully.");
     }
 
