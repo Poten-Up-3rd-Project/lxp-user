@@ -1,10 +1,9 @@
 package com.lxp.user.infrastructure.web.external.controller;
 
-import com.lxp.common.infrastructure.exception.ApiResponse;
 import com.lxp.user.application.port.provided.command.UserRoleUpdateCommand;
 import com.lxp.user.application.port.provided.command.UserSearchCommand;
 import com.lxp.user.application.port.provided.command.UserWithdrawnCommand;
-import com.lxp.user.application.port.provided.dto.UserInfoResult;
+import com.lxp.user.application.port.provided.dto.UserSearchQuery;
 import com.lxp.user.application.port.provided.usecase.SearchUserProfileUseCase;
 import com.lxp.user.application.port.provided.usecase.UserRoleUpdateUseCase;
 import com.lxp.user.application.port.provided.usecase.UserUpdateUseCase;
@@ -44,8 +43,8 @@ public class UserExternalController {
 
     @GetMapping
     public ResponseEntity<UserProfileResponse> getUserInfo(@AuthenticationPrincipal String userId) {
-        UserInfoResult userInfoResult = searchUserProfileUseCase.execute(new UserSearchCommand(userId));
-        return ResponseEntity.ok(userExternalMapper.toUserProfileResponse(userInfoResult));
+        UserSearchQuery userSearchQuery = searchUserProfileUseCase.execute(new UserSearchCommand(userId));
+        return ResponseEntity.ok(userExternalMapper.toUserProfileResponse(userSearchQuery));
     }
 
     @PatchMapping
@@ -53,7 +52,7 @@ public class UserExternalController {
         @AuthenticationPrincipal String userId,
         @RequestBody UserUpdateRequest request
     ) {
-        UserInfoResult userInfoDto = userUpdateUseCase.execute(userExternalMapper.toUserUpdateCommand(userId, request));
+        UserSearchQuery userInfoDto = userUpdateUseCase.execute(userExternalMapper.toUserUpdateCommand(userId, request));
         return ResponseEntity.ok(userExternalMapper.toUserProfileResponse(userInfoDto));
     }
 

@@ -1,7 +1,7 @@
 package com.lxp.user.infrastructure.web.external.controller;
 
 import com.lxp.user.application.port.provided.command.UserUpdateCommand;
-import com.lxp.user.application.port.provided.dto.UserInfoResult;
+import com.lxp.user.application.port.provided.dto.UserSearchQuery;
 import com.lxp.user.domain.common.model.vo.Level;
 import com.lxp.user.domain.common.model.vo.UserId;
 import com.lxp.user.domain.profile.exception.LearnerLevelNotFoundException;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserExternalMapper {
 
-    public UserProfileResponse toUserProfileResponse(UserInfoResult result) {
+    public UserProfileResponse toUserProfileResponse(UserSearchQuery result) {
         return new UserProfileResponse(
             result.id(), result.email(), result.name(), result.tags(), result.level()
         );

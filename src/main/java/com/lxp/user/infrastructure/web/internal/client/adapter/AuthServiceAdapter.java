@@ -1,7 +1,7 @@
 package com.lxp.user.infrastructure.web.internal.client.adapter;
 
 import com.lxp.user.application.port.required.AuthServicePort;
-import com.lxp.user.application.port.required.dto.AuthRegeneratedTokenRequest;
+import com.lxp.user.application.port.required.dto.AuthRegeneratedTokenCommand;
 import com.lxp.user.application.port.required.query.AuthRegeneratedTokenResult;
 import com.lxp.user.domain.common.exception.UserErrorCode;
 import com.lxp.user.domain.common.exception.UserException;
@@ -24,7 +24,7 @@ public class AuthServiceAdapter implements AuthServicePort {
 
     @Override
     @CircuitBreaker(name = "authService", fallbackMethod = "regenerateTokenFallBack")
-    public AuthRegeneratedTokenResult getRegeneratedToken(AuthRegeneratedTokenRequest request) {
+    public AuthRegeneratedTokenResult getRegeneratedToken(AuthRegeneratedTokenCommand request) {
         TokenResponse tokenResponse = ResponseUnwrapper.unwrapResponse(authServiceFeignClient.regenerateToken(
             new RegenerateTokenRequest(request.role())
         ));
@@ -39,7 +39,7 @@ public class AuthServiceAdapter implements AuthServicePort {
         log.info("Revoke token successfully.");
     }
 
-    private AuthRegeneratedTokenResult regenerateTokenFallBack(AuthRegeneratedTokenRequest request, Throwable t) {
+    private AuthRegeneratedTokenResult regenerateTokenFallBack(AuthRegeneratedTokenCommand request, Throwable t) {
         log.warn("regenerateToken fallback. role={}, reason={}", request.role(), t.toString());
         throw new UserException(UserErrorCode.EXTERNAL_SERVICE_ERROR, "Auth service unavailable", t);
     }

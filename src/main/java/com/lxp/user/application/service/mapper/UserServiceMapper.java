@@ -2,7 +2,7 @@ package com.lxp.user.application.service.mapper;
 
 import com.lxp.user.application.port.provided.dto.TagExternalResult;
 import com.lxp.user.application.port.provided.dto.UserInfoInternalResult;
-import com.lxp.user.application.port.provided.dto.UserInfoResult;
+import com.lxp.user.application.port.provided.dto.UserSearchQuery;
 import com.lxp.user.application.port.required.query.TagResult;
 import com.lxp.user.application.port.required.query.UserView;
 import com.lxp.user.application.port.required.query.UserWithProfileView;
@@ -44,8 +44,8 @@ public class UserServiceMapper {
         );
     }
 
-    public UserInfoResult toUserInfoDto(User user, List<TagResult> tagResults) {
-        return new UserInfoResult(
+    public UserSearchQuery toUserInfoDto(User user, List<TagResult> tagResults) {
+        return new UserSearchQuery(
             user.id().asString(),
             user.name(),
             user.email(),

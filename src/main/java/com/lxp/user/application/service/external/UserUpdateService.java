@@ -1,7 +1,7 @@
 package com.lxp.user.application.service.external;
 
 import com.lxp.user.application.port.provided.command.UserUpdateCommand;
-import com.lxp.user.application.port.provided.dto.UserInfoResult;
+import com.lxp.user.application.port.provided.dto.UserSearchQuery;
 import com.lxp.user.application.port.provided.usecase.UserUpdateUseCase;
 import com.lxp.user.application.port.required.TagServicePort;
 import com.lxp.user.application.port.required.UserCommandPort;
@@ -29,7 +29,7 @@ public class UserUpdateService implements UserUpdateUseCase {
     private final TagServicePort tagServicePort;
 
     @Override
-    public UserInfoResult execute(UserUpdateCommand command) {
+    public UserSearchQuery execute(UserUpdateCommand command) {
         UserWithProfileView view = userQueryPort.findAggregateUserById(command.userId())
             .orElseThrow(UserNotFoundException::new);
 

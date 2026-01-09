@@ -5,7 +5,7 @@ import com.lxp.user.application.port.provided.usecase.UserRoleUpdateUseCase;
 import com.lxp.user.application.port.required.AuthServicePort;
 import com.lxp.user.application.port.required.UserCommandPort;
 import com.lxp.user.application.port.required.UserQueryPort;
-import com.lxp.user.application.port.required.dto.AuthRegeneratedTokenRequest;
+import com.lxp.user.application.port.required.dto.AuthRegeneratedTokenCommand;
 import com.lxp.user.application.port.required.query.AuthRegeneratedTokenResult;
 import com.lxp.user.application.port.required.query.UserView;
 import com.lxp.user.application.service.mapper.UserServiceMapper;
@@ -37,7 +37,7 @@ public class UserRoleUpdateService implements UserRoleUpdateUseCase {
         userCommandPort.save(user);
 
         return authServicePort.getRegeneratedToken(
-            new AuthRegeneratedTokenRequest(user.email(), command.token(), List.of(user.role().name()))
+            new AuthRegeneratedTokenCommand(user.email(), command.token(), List.of(user.role().name()))
         );
     }
 }
