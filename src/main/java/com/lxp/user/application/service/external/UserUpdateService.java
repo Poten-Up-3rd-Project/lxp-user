@@ -13,12 +13,14 @@ import com.lxp.user.domain.common.exception.UserNotFoundException;
 import com.lxp.user.domain.user.model.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(rollbackFor = Throwable.class)
 public class UserUpdateService implements UserUpdateUseCase {
 
     private final UserQueryPort userQueryPort;

@@ -59,7 +59,7 @@ public class UserExternalController {
 
     @PreAuthorize("hasAuthority('ROLE_LEARNER')")
     @PutMapping("/role")
-    public ResponseEntity<ApiResponse<Void>> updateUserToInstructor(
+    public ResponseEntity<Void> updateUserToInstructor(
         @AuthenticationPrincipal String userId,
         @CookieValue(value = CookieConstants.ACCESS_TOKEN_NAME) String token,
         HttpServletResponse response
@@ -69,7 +69,7 @@ public class UserExternalController {
 
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
         response.setStatus(HttpServletResponse.SC_OK);
-        return ResponseEntity.ok(ApiResponse.success());
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping
