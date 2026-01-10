@@ -5,8 +5,6 @@ import com.lxp.user.infrastructure.persistence.read.dto.UserStatusProjection;
 import com.lxp.user.infrastructure.persistence.read.dto.UserSummaryDto;
 import com.lxp.user.infrastructure.persistence.vo.InfraUserStatus;
 import com.lxp.user.infrastructure.persistence.write.entity.UserJpaEntity;
-import com.lxp.user.infrastructure.persistence.write.entity.UserProfileJpaEntity;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -65,23 +63,6 @@ public interface UserReadRepository extends JpaRepository<UserJpaEntity, String>
         WHERE u.email = :email
         """)
     Optional<UserSummaryDto> findUserSummaryByEmail(@Param("email") String email);
-
-
-    // -----------------------------------------------------------
-
-
-    @Deprecated
-    @EntityGraph(attributePaths = {"user", "tags"})
-    @Query("SELECT p FROM UserProfileJpaEntity p WHERE p.user.id = :userId")
-    Optional<UserProfileJpaEntity> findProfileWithTagsByUserId(@Param("userId") String userId);
-
-    @Deprecated
-    @EntityGraph(attributePaths = {"user", "tags"})
-    @Query("SELECT p FROM UserProfileJpaEntity p WHERE p.user.email = :email")
-    Optional<UserProfileJpaEntity> findProfileWithTagsByEmail(@Param("email") String email);
-
-    @Deprecated
-    Optional<UserJpaEntity> findByEmail(String email);
 
     @Query("SELECT p.tags FROM UserProfileJpaEntity p WHERE p.user.id = :userId")
     List<Long> findTagsByUserId(@Param("userId") String userId);

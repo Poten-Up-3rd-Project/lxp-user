@@ -1,7 +1,8 @@
 package com.lxp.user.infrastructure.persistence.write.adapter;
 
-import com.lxp.user.application.port.required.UserCommandPort;
+import com.lxp.user.application.port.required.UserPort;
 import com.lxp.user.domain.common.exception.UserNotFoundException;
+import com.lxp.user.domain.common.model.vo.UserId;
 import com.lxp.user.domain.profile.exception.ProfileNotFoundException;
 import com.lxp.user.domain.user.model.entity.User;
 import com.lxp.user.infrastructure.persistence.write.entity.UserJpaEntity;
@@ -19,7 +20,7 @@ import java.util.Objects;
 @Component
 @RequiredArgsConstructor
 @Transactional
-public class UserWriteAdapter implements UserCommandPort {
+public class UserWriteAdapter implements UserPort {
 
     private final UserWriteRepository userWriteRepository;
     private final UserWriteMapper userWriteMapper;
@@ -59,6 +60,18 @@ public class UserWriteAdapter implements UserCommandPort {
         UserJpaEntity userEntity = userWriteRepository.findById(user.id().asString())
             .orElseThrow(UserNotFoundException::new);
         userWriteMapper.updateUserFromDomain(user, userEntity);
+    }
+
+    @Override
+    public User loadById(UserId userId) {
+        UserJpaEntity userEntity = userWriteRepository.findById(userId.asString())
+            .orElseThrow(UserNotFoundException::new);
+
+        UserProfileJpaEntity profileEntity = userProfileWriteRepository
+            .findProfileWithTagsByUserId(userId.asString())
+            .orElse(null);
+
+        return userWriteMapper.toUser(userEntity, profileEntity);
     }
 
 }

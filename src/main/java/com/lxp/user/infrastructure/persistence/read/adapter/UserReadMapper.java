@@ -7,8 +7,6 @@ import com.lxp.user.domain.user.model.vo.UserEmail;
 import com.lxp.user.domain.user.model.vo.UserName;
 import com.lxp.user.infrastructure.persistence.read.dto.UserDetailDto;
 import com.lxp.user.infrastructure.persistence.read.dto.UserSummaryDto;
-import com.lxp.user.infrastructure.persistence.write.entity.UserJpaEntity;
-import com.lxp.user.infrastructure.persistence.write.entity.UserProfileJpaEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -41,17 +39,4 @@ public class UserReadMapper {
         );
     }
 
-    public UserWithProfileView toUserWithProfileView(UserJpaEntity userEntity, UserProfileJpaEntity profileEntity) {
-        return new UserWithProfileView(
-            UserId.of(userEntity.getId()),
-            UserName.of(userEntity.getName()),
-            UserEmail.of(userEntity.getEmail()),
-            userEntity.getRole().toDomain(),
-            userEntity.getUserStatus().toDomain(),
-            profileEntity.getLevel().toDomain(),
-            profileEntity.getTags(),
-            userEntity.getCreatedAt(),
-            userEntity.getDeletedAt()
-        );
-    }
 }

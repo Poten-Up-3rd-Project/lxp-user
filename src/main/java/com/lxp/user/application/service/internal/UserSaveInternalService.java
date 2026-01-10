@@ -2,7 +2,7 @@ package com.lxp.user.application.service.internal;
 
 import com.lxp.user.application.port.provided.command.UserSaveInternalCommand;
 import com.lxp.user.application.port.provided.usecase.UserSaveUseCase;
-import com.lxp.user.application.port.required.UserCommandPort;
+import com.lxp.user.application.port.required.UserPort;
 import com.lxp.user.domain.user.model.entity.User;
 import com.lxp.user.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -15,11 +15,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserSaveInternalService implements UserSaveUseCase {
 
     private final UserService userService;
-    private final UserCommandPort userCommandPort;
+    private final UserPort userPort;
 
     @Override
     public void execute(UserSaveInternalCommand command) {
         User user = userService.create(command.toSpec());
-        userCommandPort.saveWithProfile(user);
+        userPort.saveWithProfile(user);
     }
 }
