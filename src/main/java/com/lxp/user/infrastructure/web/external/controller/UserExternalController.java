@@ -63,6 +63,7 @@ public class UserExternalController {
         @CookieValue(value = CookieConstants.ACCESS_TOKEN_NAME) String token,
         HttpServletResponse response
     ) {
+        log.debug("token = {}", token);
         AuthRegeneratedTokenResult execute = userRoleUpdateUseCase.execute(new UserRoleUpdateCommand(userId, token));
         ResponseCookie cookie = createCookie(execute.token(), execute.expiresIn());
 

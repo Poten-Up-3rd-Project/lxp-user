@@ -4,6 +4,7 @@ import com.lxp.user.application.port.provided.dto.UserInfoInternalResult;
 import com.lxp.user.application.port.provided.usecase.UserFindInternalUseCase;
 import com.lxp.user.application.port.provided.usecase.UserSaveUseCase;
 import com.lxp.user.infrastructure.web.internal.controller.dto.UserInfoResponse;
+import com.lxp.user.infrastructure.web.internal.controller.dto.UserRoleResponse;
 import com.lxp.user.infrastructure.web.internal.controller.dto.UserSaveRequest;
 import com.lxp.user.infrastructure.web.internal.controller.mapper.UserInternalMapper;
 import lombok.RequiredArgsConstructor;
@@ -44,12 +45,13 @@ public class UserInternalController {
     }
 
     @GetMapping("/{userId}/role")
-    public ResponseEntity<String> getRole(@RequestHeader(name = "Authorization") String token,
-                                          @PathVariable String userId) {
+    public ResponseEntity<UserRoleResponse> getRole(@RequestHeader(name = "Authorization") String token,
+                                                    @PathVariable String userId) {
         if (!isValidInternalToken(token)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
-        return ResponseEntity.ok(userFindInternalUseCase.execute(userId).role());
+        UserInfoInternalResult execute = userFindInternalUseCase.execute(userId);
+        return ResponseEntity.ok(new UserRoleResponse(execute.role(), execute.status(), execute.deletedAt()));
     }
 
     @GetMapping

@@ -24,9 +24,9 @@ public class AuthServiceAdapter implements AuthServicePort {
 
     @Override
     @CircuitBreaker(name = "authService", fallbackMethod = "regenerateTokenFallBack")
-    public AuthRegeneratedTokenResult getRegeneratedToken(AuthRegeneratedTokenCommand request) {
+    public AuthRegeneratedTokenResult getRegeneratedToken(AuthRegeneratedTokenCommand command) {
         TokenResponse tokenResponse = ResponseAssertions.getBodyIf2xx(authServiceFeignClient.regenerateToken(
-            new RegenerateTokenRequest(request.role())
+            new RegenerateTokenRequest(command.email(), command.token(), command.role())
         ));
 
         return new AuthRegeneratedTokenResult(tokenResponse.accessToken(), tokenResponse.expiresIn());

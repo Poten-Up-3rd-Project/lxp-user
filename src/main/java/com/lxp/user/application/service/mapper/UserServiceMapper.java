@@ -33,7 +33,9 @@ public class UserServiceMapper {
             view.email().value(),
             view.role().name(),
             view.tagIds(),
-            view.level().name()
+            view.level().name(),
+            view.status().name(),
+            view.deletedAt()
         );
     }
 

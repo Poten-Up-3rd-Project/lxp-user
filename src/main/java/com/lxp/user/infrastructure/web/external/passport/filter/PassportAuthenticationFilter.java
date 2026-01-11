@@ -53,7 +53,6 @@ public class PassportAuthenticationFilter extends OncePerRequestFilter {
                 MDC.put("traceId", claims.traceId());
 
             } catch (Exception e) {
-                SecurityContextHolder.clearContext();
                 throw new BadCredentialsException("Invalid passport", e);
             }
         }
@@ -62,7 +61,6 @@ public class PassportAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } finally {
             MDC.clear();
-            SecurityContextHolder.clearContext();
         }
     }
 }
