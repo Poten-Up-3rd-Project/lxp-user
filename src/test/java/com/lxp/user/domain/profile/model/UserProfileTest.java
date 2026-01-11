@@ -1,5 +1,6 @@
 package com.lxp.user.domain.profile.model;
 
+import com.lxp.user.domain.common.exception.UserException;
 import com.lxp.user.domain.common.model.vo.Level;
 import com.lxp.user.domain.common.model.vo.UserId;
 import com.lxp.user.domain.profile.exception.TagSizeConstraintViolationException;
@@ -46,17 +47,17 @@ class UserProfileTest {
         // then
         assertThatThrownBy(() ->
             UserProfile.create(null, level, tags)
-        ).isInstanceOf(NullPointerException.class)
+        ).isInstanceOf(UserException.class)
             .hasMessageContaining("userId는 null일 수 없습니다");
 
         assertThatThrownBy(() ->
             UserProfile.create(userId, null, tags)
-        ).isInstanceOf(NullPointerException.class)
+        ).isInstanceOf(UserException.class)
             .hasMessageContaining("level은 null일 수 없습니다");
 
         assertThatThrownBy(() ->
             UserProfile.create(userId, level, null)
-        ).isInstanceOf(NullPointerException.class)
+        ).isInstanceOf(UserException.class)
             .hasMessageContaining("tags는 null일 수 없습니다");
     }
 

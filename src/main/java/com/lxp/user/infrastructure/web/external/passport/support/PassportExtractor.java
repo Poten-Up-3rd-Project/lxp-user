@@ -1,14 +1,13 @@
 package com.lxp.user.infrastructure.web.external.passport.support;
 
+import com.lxp.user.infrastructure.constants.PassportConstants;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
 
 @Component
 public class PassportExtractor {
 
-    private static final String PASSPORT_HEADER = "X-Passport";
-
     public String extract(HttpServletRequest request) {
-        return request.getHeader(PASSPORT_HEADER);
+        return request.getHeader(PassportConstants.PASSPORT_HEADER_NAME);
     }
 }

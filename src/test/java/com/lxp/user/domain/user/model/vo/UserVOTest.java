@@ -1,5 +1,6 @@
 package com.lxp.user.domain.user.model.vo;
 
+import com.lxp.user.domain.common.exception.UserException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -39,7 +40,7 @@ class UserVOTest {
         void shouldThrowExceptionWhenNameExceedsMaxLength() {
             // then
             assertThatThrownBy(() -> UserName.of("123456"))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(UserException.class)
                 .hasMessageContaining("5자를 초과할 수 없습니다");
         }
 
@@ -48,7 +49,7 @@ class UserVOTest {
         void shouldThrowExceptionWhenNameIsNull() {
             // then
             assertThatThrownBy(() -> UserName.of(null))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(UserException.class)
                 .hasMessageContaining("필수입니다");
         }
 
@@ -57,7 +58,7 @@ class UserVOTest {
         void shouldThrowExceptionWhenNameIsBlank() {
             // then
             assertThatThrownBy(() -> UserName.of("   "))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(UserException.class)
                 .hasMessageContaining("필수입니다");
         }
     }
@@ -89,16 +90,16 @@ class UserVOTest {
         @DisplayName("잘못된 형식의 이메일은 예외를 발생시킨다")
         void shouldThrowExceptionForInvalidEmail() {
             assertThatThrownBy(() -> UserEmail.of("invalid"))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(UserException.class);
             
             assertThatThrownBy(() -> UserEmail.of("@domain.com"))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(UserException.class);
             
             assertThatThrownBy(() -> UserEmail.of("user@"))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(UserException.class);
             
             assertThatThrownBy(() -> UserEmail.of("user@domain"))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(UserException.class);
         }
 
         @Test
@@ -106,7 +107,7 @@ class UserVOTest {
         void shouldThrowExceptionWhenEmailIsNull() {
             // then
             assertThatThrownBy(() -> UserEmail.of(null))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(UserException.class);
         }
     }
 

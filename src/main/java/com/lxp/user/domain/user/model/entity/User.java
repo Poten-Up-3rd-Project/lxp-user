@@ -1,9 +1,10 @@
 package com.lxp.user.domain.user.model.entity;
 
 import com.lxp.common.domain.event.AggregateRoot;
-import com.lxp.user.domain.common.model.vo.UserId;
-import com.lxp.user.domain.profile.model.entity.UserProfile;
 import com.lxp.user.domain.common.model.vo.Level;
+import com.lxp.user.domain.common.model.vo.UserId;
+import com.lxp.user.domain.common.support.UserGuard;
+import com.lxp.user.domain.profile.model.entity.UserProfile;
 import com.lxp.user.domain.user.model.vo.UserEmail;
 import com.lxp.user.domain.user.model.vo.UserName;
 import com.lxp.user.domain.user.model.vo.UserRole;
@@ -11,7 +12,6 @@ import com.lxp.user.domain.user.model.vo.UserStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 public class User extends AggregateRoot<UserId> {
 
@@ -30,10 +30,10 @@ public class User extends AggregateRoot<UserId> {
     private LocalDateTime deletedAt;
 
     private User(UserId id, UserName name, UserEmail email, UserRole userRole, UserStatus userStatus, UserProfile userProfile, LocalDateTime deletedAt) {
-        this.id = Objects.requireNonNull(id, "userId는 null일 수 없습니다.");
-        this.name = Objects.requireNonNull(name, "userName은 null일 수 없습니다.");
-        this.email = Objects.requireNonNull(email, "userEmail은 null일 수 없습니다.");
-        this.role = Objects.requireNonNull(userRole, "userRole은 null일 수 없습니다.");
+        this.id = UserGuard.requireNonNull(id, "userId는 null일 수 없습니다.");
+        this.name = UserGuard.requireNonNull(name, "userName은 null일 수 없습니다.");
+        this.email = UserGuard.requireNonNull(email, "userEmail은 null일 수 없습니다.");
+        this.role = UserGuard.requireNonNull(userRole, "userRole은 null일 수 없습니다.");
         this.userStatus = userStatus;
         this.userProfile = userProfile;
         this.deletedAt = deletedAt;
@@ -68,6 +68,10 @@ public class User extends AggregateRoot<UserId> {
         if (this.role == UserRole.LEARNER && this.userStatus == UserStatus.ACTIVE) {
             this.role = UserRole.INSTRUCTOR;
         }
+    }
+
+    public boolean hasProfile() {
+        return this.userProfile != null;
     }
 
     public boolean canManageOwnCourse() {

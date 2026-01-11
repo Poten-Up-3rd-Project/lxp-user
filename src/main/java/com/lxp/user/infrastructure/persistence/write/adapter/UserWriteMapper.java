@@ -1,7 +1,11 @@
 package com.lxp.user.infrastructure.persistence.write.adapter;
 
+import com.lxp.user.domain.common.model.vo.UserId;
 import com.lxp.user.domain.profile.model.entity.UserProfile;
+import com.lxp.user.domain.profile.model.vo.Tags;
 import com.lxp.user.domain.user.model.entity.User;
+import com.lxp.user.domain.user.model.vo.UserEmail;
+import com.lxp.user.domain.user.model.vo.UserName;
 import com.lxp.user.infrastructure.persistence.vo.InfraLevel;
 import com.lxp.user.infrastructure.persistence.vo.InfraUserRole;
 import com.lxp.user.infrastructure.persistence.vo.InfraUserStatus;
@@ -10,10 +14,28 @@ import com.lxp.user.infrastructure.persistence.write.entity.UserProfileJpaEntity
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Component
 public class UserWriteMapper {
+
+    public User toUser(UserJpaEntity userJpaEntity, UserProfileJpaEntity userProfileJpaEntity) {
+        UserId userId = UserId.of(userJpaEntity.getId());
+        UserProfile userProfile = toUserProfile(userProfileJpaEntity, userId);
+
+        return User.of(
+            userId,
+            UserName.of(userJpaEntity.getName()),
+            UserEmail.of(userJpaEntity.getEmail()),
+            userJpaEntity.getRole().toDomain(),
+            userJpaEntity.getUserStatus().toDomain(),
+            userProfile,
+            userJpaEntity.getDeletedAt()
+        );
+    }
+
+    public UserProfile toUserProfile(UserProfileJpaEntity userProfileJpaEntity, UserId userId) {
+        return UserProfile.create(userId, userProfileJpaEntity.getLevel().toDomain(), new Tags(userProfileJpaEntity.getTags()));
+    }
 
     public UserJpaEntity toEntity(User user) {
         return UserJpaEntity.of(
