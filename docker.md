@@ -3,5 +3,5 @@
 ```
 
 ```bash
-docker build -t app-user:local .
+docker build -f Dockerfile.local -t app-user:local .
 ```
