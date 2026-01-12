@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.List;
 
-@FeignClient(name = "tag-service", url = "${services.tag-service.url}")
+@FeignClient(name = "tag-service", url = "${services.tag.url}")
 public interface TagServiceFeignClient {
 
     /**
      * TODO
-     *  응답값은 tag service 구현되면 수정 예정
+     *  응답값은 tag service 구현되면 수정 예시
      * @param ids
      * @return
      */
