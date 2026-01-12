@@ -40,9 +40,6 @@ passport:
 internal:
   auth-token: auth-service-internal-token
 
-internal:
-  auth-token: auth-service-internal-token
-
 # Actuator (Health Check)
 management:
   endpoints:
