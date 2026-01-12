@@ -34,6 +34,7 @@ public class PassportConfig {
             )
             .addFilterBefore(passportFilter, UsernamePasswordAuthenticationFilter.class)
             .authorizeHttpRequests(user -> user
+                .requestMatchers("/actuator/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/internal/api-v1/users").permitAll()
                 .requestMatchers("/internal/api-v1/users/*/role").permitAll()
                 .requestMatchers("/error").permitAll()
