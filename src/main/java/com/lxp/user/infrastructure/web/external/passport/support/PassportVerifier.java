@@ -19,7 +19,7 @@ public class PassportVerifier {
     private final SecretKey key;
 
     public PassportVerifier(KeyProperties keyProperties) {
-        this.key = keyProperties.jwtSecretKey();
+        this.key = keyProperties.passportSecretKey();
     }
 
     public PassportClaims verify(String encodedPassport) {

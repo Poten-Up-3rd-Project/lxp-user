@@ -18,7 +18,7 @@ public class KeyProperties {
     private String secretKey;
 
     @Bean
-    public SecretKey jwtSecretKey() {
+    public SecretKey passportSecretKey() {
         UserGuard.requireNonBlank(secretKey, "jwt secret key cannot be null or empty");
         return Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
     }
