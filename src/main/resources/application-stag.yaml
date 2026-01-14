@@ -1,0 +1,55 @@
+spring:
+  # MySQL
+  datasource:
+    url: jdbc:mysql://lxp-mysql:3306/lxp_user_dev?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  # JPA
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+  # Redis
+  data:
+    redis:
+      host: redis
+      port: 6379
+      password: ${SPRING_DATA_REDIS_PASSWORD}
+  # RabbitMQ
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: ${SPRING_RABBITMQ_USERNAME}
+    password: ${SPRING_RABBITMQ_PASSWORD}
+
+services:
+  tag:
+    url: http://lxp-tag:8080
+  auth:
+    url: http://lxp-auth:8080
+
+passport:
+  key:
+    public-key-string: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzPmo5992YpGJ1s2IPxNsF1PamxUi6tN1pC6mmsrtFYBTNbY1G4jRcy7LMQEz0CGvaSvqDW5qCO+JRMhbyisCHjfBGrTwgalY/HDCzoIq+4d8rQV3pK8mQzXh8NsrCorRNBoX8dZZVk22DXXsWUQ+igMgYxo401Hnao7eZ5Twr0NNbbskqWW+jrg5xfPXOeK5bgcGXS8Lzp4uei+lYNokvxP99CIlyN3KkqMiUjJ10rEZH2R/rSLpskkvEQeSQG60J4wuZdereuA6kZJgz1Csg5RDZ0wfaa43vR7UB1GhYfFOwGSXLCypq9XjiPAAv+IiQmwW2UHj0esyp7zyIPsXQwIDAQAB
+
+internal:
+  auth-token: auth-service-internal-token
+
+# Actuator (Health Check)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      probes:
+        enabled: true
+# 서버 포트
+server:
+  port: 8080
