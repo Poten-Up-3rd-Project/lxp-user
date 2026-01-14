@@ -10,22 +10,22 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import org.springframework.stereotype.Component;
 
-import java.security.PublicKey;
+import javax.crypto.SecretKey;
 import java.util.Arrays;
 
 @Component
 public class PassportVerifier {
 
-    private final PublicKey publicKey;
+    private final SecretKey key;
 
-    public PassportVerifier(KeyProperties keyProperties) throws Exception {
-        this.publicKey = keyProperties.getPublicKey();
+    public PassportVerifier(KeyProperties keyProperties) {
+        this.key = keyProperties.passportSecretKey();
     }
 
     public PassportClaims verify(String encodedPassport) {
         try {
             Claims claims = Jwts.parser()
-                .verifyWith(publicKey)
+                .verifyWith(key)
                 .build()
                 .parseSignedClaims(encodedPassport)
                 .getPayload();
