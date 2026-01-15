@@ -20,15 +20,4 @@ public class UserInternalMapper {
         );
     }
 
-    public UserInfoResponse toUserInfoResponse(UserProfileInternalResult userInfoResult) {
-        return new UserInfoResponse(
-            userInfoResult.id(),
-            userInfoResult.name(),
-            userInfoResult.email(),
-            userInfoResult.role(),
-            userInfoResult.tagIds(),
-            userInfoResult.level()
-        );
-    }
-
 }
