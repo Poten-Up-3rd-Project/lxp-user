@@ -1,7 +1,7 @@
 package com.lxp.user.infrastructure.web.internal.controller.mapper;
 
 import com.lxp.user.application.port.provided.command.UserSaveInternalCommand;
-import com.lxp.user.application.port.provided.dto.UserInfoInternalResult;
+import com.lxp.user.application.port.provided.dto.UserProfileInternalResult;
 import com.lxp.user.infrastructure.web.internal.controller.dto.UserInfoResponse;
 import com.lxp.user.infrastructure.web.internal.controller.dto.UserSaveRequest;
 import org.springframework.stereotype.Component;
@@ -20,7 +20,7 @@ public class UserInternalMapper {
         );
     }
 
-    public UserInfoResponse toUserInfoResponse(UserInfoInternalResult userInfoResult) {
+    public UserInfoResponse toUserInfoResponse(UserProfileInternalResult userInfoResult) {
         return new UserInfoResponse(
             userInfoResult.id(),
             userInfoResult.name(),
