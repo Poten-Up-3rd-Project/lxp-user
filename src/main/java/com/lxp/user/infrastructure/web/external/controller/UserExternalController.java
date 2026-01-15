@@ -88,7 +88,7 @@ public class UserExternalController {
             .secure(false)
             .path(CookieConstants.DEFAULT_PATH)
             .maxAge(expiresIn)
-            .sameSite("Lax")
+            .sameSite("None")
             .build();
     }
 
@@ -98,7 +98,7 @@ public class UserExternalController {
             .secure(false)
             .path(CookieConstants.DEFAULT_PATH)
             .maxAge(0)
-            .sameSite("Lax")
+            .sameSite("None")
             .build();
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
     }
