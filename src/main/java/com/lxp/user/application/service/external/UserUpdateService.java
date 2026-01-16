@@ -3,7 +3,7 @@ package com.lxp.user.application.service.external;
 import com.lxp.user.application.port.provided.command.UserUpdateCommand;
 import com.lxp.user.application.port.provided.dto.UserSearchQuery;
 import com.lxp.user.application.port.provided.usecase.UserUpdateUseCase;
-import com.lxp.user.application.port.required.TagServicePort;
+import com.lxp.user.application.port.required.TagQueryPort;
 import com.lxp.user.application.port.required.UserPort;
 import com.lxp.user.application.port.required.query.TagResult;
 import com.lxp.user.application.service.mapper.UserServiceMapper;
@@ -22,7 +22,7 @@ public class UserUpdateService implements UserUpdateUseCase {
 
     private final UserPort userPort;
     private final UserServiceMapper userServiceMapper;
-    private final TagServicePort tagServicePort;
+    private final TagQueryPort tagQueryPort;
 
     @Override
     public UserSearchQuery execute(UserUpdateCommand command) {
@@ -32,7 +32,7 @@ public class UserUpdateService implements UserUpdateUseCase {
         List<TagResult> tags;
         if (user.hasProfile()) {
             userPort.saveWithProfile(user);
-            tags = tagServicePort.findTags(user.profile().tags().values());
+            tags = tagQueryPort.findTags(user.profile().tags().values());
         } else {
             userPort.save(user);
             tags = new ArrayList<>();

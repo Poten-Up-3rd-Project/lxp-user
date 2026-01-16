@@ -1,23 +1,17 @@
 package com.lxp.user.infrastructure.web.internal.client;
 
-import com.lxp.user.infrastructure.web.internal.client.dto.TagListResponse;
+import com.lxp.user.application.port.required.query.TagResult;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
 @FeignClient(name = "tag-service", url = "${services.tag.url}")
 public interface TagServiceFeignClient {
 
-    /**
-     * TODO
-     *  응답값은 tag service 구현되면 수정 예시
-     * @param ids
-     * @return
-     */
-    @GetMapping("")
-    ResponseEntity<TagListResponse> findTags(@ModelAttribute List<Long> ids);
+    @GetMapping("/api-v1/tags/findByIds")
+    ResponseEntity<List<TagResult>> findTags(@RequestParam List<Long> ids);
 
 }
