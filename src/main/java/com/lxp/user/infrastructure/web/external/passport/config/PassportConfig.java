@@ -36,7 +36,11 @@ public class PassportConfig {
             .authorizeHttpRequests(user -> user
                 .requestMatchers("/actuator/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/internal/api-v1/users").permitAll()
-                .requestMatchers("/internal/api-v1/users/*/role").permitAll()
+                .requestMatchers(
+                    "/internal/api-v1/users/*/role",
+                    "/internal/api-v1/users/*/profile",
+                    "/internal/api-v1/users/*"
+                ).permitAll()
                 .requestMatchers("/error").permitAll()
                 .anyRequest().authenticated()
             )
