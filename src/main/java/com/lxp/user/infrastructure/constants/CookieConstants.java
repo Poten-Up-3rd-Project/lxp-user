@@ -13,4 +13,10 @@ public interface CookieConstants {
 
     // Cookie Path
     String DEFAULT_PATH = "/";
+
+    // SameSite
+    String SAME_SITE = "Lax";
+
+    // Secure
+    boolean SECURE = false;
 }
