@@ -33,7 +33,7 @@ public class UserServiceMapper {
         return new UserProfileInternalResult(
             view.userId().asString(),
             view.tagIds(),
-            view.role().name()
+            view.level().name()
         );
     }
 
