@@ -61,7 +61,7 @@ public class UserInternalController {
         return ResponseEntity.ok(userInfoInternalUseCase.execute(userId));
     }
 
-    @GetMapping("/{userId}/profile}")
+    @GetMapping("/{userId}/profile")
     public ResponseEntity<UserProfileInternalResult> getUserProfile(@PathVariable String userId) {
         return ResponseEntity.ok(userProfileInternalUseCase.execute(userId));
     }
