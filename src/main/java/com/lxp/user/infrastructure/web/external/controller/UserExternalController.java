@@ -85,20 +85,20 @@ public class UserExternalController {
     private ResponseCookie createCookie(String token, long expiresIn) {
         return ResponseCookie.from(CookieConstants.ACCESS_TOKEN_NAME, token)
             .httpOnly(CookieConstants.HTTP_ONLY)
-            .secure(false)
+            .secure(CookieConstants.SECURE)
             .path(CookieConstants.DEFAULT_PATH)
             .maxAge(expiresIn)
-            .sameSite("None")
+            .sameSite(CookieConstants.SAME_SITE)
             .build();
     }
 
     private void removeCookie(HttpServletResponse response) {
         ResponseCookie cookie = ResponseCookie.from(CookieConstants.ACCESS_TOKEN_NAME, "")
             .httpOnly(CookieConstants.HTTP_ONLY)
-            .secure(false)
+            .secure(CookieConstants.SECURE)
             .path(CookieConstants.DEFAULT_PATH)
             .maxAge(0)
-            .sameSite("None")
+            .sameSite(CookieConstants.SAME_SITE)
             .build();
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
     }
