@@ -30,7 +30,7 @@ spring:
 
 services:
   tag:
-    url: http://lxp-tag:8080
+    url: http://lxp-admin:8080
   auth:
     url: http://lxp-auth:8080
 
