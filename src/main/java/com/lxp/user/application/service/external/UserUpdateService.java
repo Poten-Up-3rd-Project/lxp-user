@@ -7,6 +7,7 @@ import com.lxp.user.application.port.required.TagQueryPort;
 import com.lxp.user.application.port.required.UserPort;
 import com.lxp.user.application.port.required.query.TagResult;
 import com.lxp.user.application.service.mapper.UserServiceMapper;
+import com.lxp.user.application.service.support.EventPublishingSupport;
 import com.lxp.user.domain.user.model.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ public class UserUpdateService implements UserUpdateUseCase {
     private final UserPort userPort;
     private final UserServiceMapper userServiceMapper;
     private final TagQueryPort tagQueryPort;
+    private final EventPublishingSupport eventPublishingSupport;
 
     @Override
     public UserSearchQuery execute(UserUpdateCommand command) {
@@ -38,6 +40,7 @@ public class UserUpdateService implements UserUpdateUseCase {
             tags = new ArrayList<>();
         }
 
+        eventPublishingSupport.publishAndClear(user);
         return userServiceMapper.toUserInfoDto(user, tags);
     }
 }
