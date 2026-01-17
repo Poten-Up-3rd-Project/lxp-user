@@ -8,6 +8,7 @@ public record UserProfileResponse(
     String userId,
     String email,
     String name,
+    String role,
     List<TagExternalResult> tags,
     String level
 ) {
