@@ -15,7 +15,7 @@ public class UserExternalMapper {
 
     public UserProfileResponse toUserProfileResponse(UserSearchQuery result) {
         return new UserProfileResponse(
-            result.id(), result.email(), result.name(), result.tags(), result.level()
+            result.id(), result.email(), result.name(), result.role(), result.tags(), result.level()
         );
     }
 
