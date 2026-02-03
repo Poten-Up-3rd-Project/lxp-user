@@ -13,8 +13,10 @@ import com.lxp.user.infrastructure.persistence.write.repository.UserWriteReposit
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
@@ -26,6 +28,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 @EnableJpaAuditing
 @ActiveProfiles("test")
+@EntityScan(basePackages = {"com.lxp.user", "com.lxp.common.infrastructure.persistence"})
+@EnableJpaRepositories(basePackages = {"com.lxp.user", "com.lxp.common"})
 @DisplayName("UserReadRepository 통합 테스트")
 class UserReadRepositoryIntegrationTest {
 
