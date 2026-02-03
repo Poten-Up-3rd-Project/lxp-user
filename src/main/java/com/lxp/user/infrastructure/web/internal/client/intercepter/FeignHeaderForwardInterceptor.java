@@ -1,33 +1,21 @@
 package com.lxp.user.infrastructure.web.internal.client.intercepter;
 
-import com.lxp.user.infrastructure.constants.PassportConstants;
+import com.lxp.passport.core.support.PassportHeaderProvider;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class FeignHeaderForwardInterceptor implements RequestInterceptor {
+
+    private final PassportHeaderProvider provider;
 
     @Override
     public void apply(RequestTemplate requestTemplate) {
-        ServletRequestAttributes attrs = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-
-        if (attrs == null) {
-            return;
-        }
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        if (auth != null && auth.getCredentials() != null) {
-            String string = String.valueOf(auth.getCredentials());
-            log.debug("auth.Credentials: {}", string);
-            requestTemplate.header(PassportConstants.PASSPORT_HEADER_NAME, string);
-        }
+        provider.headers().forEach(requestTemplate::header);
     }
 }

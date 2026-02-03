@@ -1,5 +1,7 @@
 package com.lxp.user.infrastructure.web.external.controller;
 
+import com.lxp.passport.authorization.annotation.CurrentUserId;
+import com.lxp.passport.authorization.annotation.RequireRole;
 import com.lxp.user.application.port.provided.command.UserRoleUpdateCommand;
 import com.lxp.user.application.port.provided.command.UserSearchCommand;
 import com.lxp.user.application.port.provided.command.UserWithdrawnCommand;
@@ -18,8 +20,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,24 +42,24 @@ public class UserExternalController {
     private final UserExternalMapper userExternalMapper;
 
     @GetMapping
-    public ResponseEntity<UserProfileResponse> getUserInfo(@AuthenticationPrincipal String userId) {
+    public ResponseEntity<UserProfileResponse> getUserInfo(@CurrentUserId String userId) {
         UserSearchQuery userSearchQuery = searchUserProfileUseCase.execute(new UserSearchCommand(userId));
         return ResponseEntity.ok(userExternalMapper.toUserProfileResponse(userSearchQuery));
     }
 
     @PatchMapping
     public ResponseEntity<UserProfileResponse> updateUserInfo(
-        @AuthenticationPrincipal String userId,
+        @CurrentUserId String userId,
         @RequestBody UserUpdateRequest request
     ) {
         UserSearchQuery userInfoDto = userUpdateUseCase.execute(userExternalMapper.toUserUpdateCommand(userId, request));
         return ResponseEntity.ok(userExternalMapper.toUserProfileResponse(userInfoDto));
     }
 
-    @PreAuthorize("hasAuthority('ROLE_LEARNER')")
+    @RequireRole("ROLE_LEARNER")
     @PutMapping("/role")
     public ResponseEntity<Void> updateUserToInstructor(
-        @AuthenticationPrincipal String userId,
+        @CurrentUserId String userId,
         @CookieValue(value = CookieConstants.ACCESS_TOKEN_NAME) String token,
         HttpServletResponse response
     ) {
@@ -73,7 +73,7 @@ public class UserExternalController {
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> deleteUserInfo(@AuthenticationPrincipal String userId,
+    public ResponseEntity<Void> deleteUserInfo(@CurrentUserId String userId,
                                                @CookieValue(value = CookieConstants.ACCESS_TOKEN_NAME) String token,
                                                HttpServletResponse response) {
         userWithdrawnUseCase.execute(new UserWithdrawnCommand(userId, token));

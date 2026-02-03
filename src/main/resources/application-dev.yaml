@@ -37,6 +37,11 @@ services:
 passport:
   key:
     secret-key: ${PASSPORT_SECRET:default-secret-key-for-testing-minimum-32chars}
+  filter:
+    exclude-paths:
+      - /internal/api-v1/users/*/role
+      - /internal/api-v1/users/*/profile
+      - /internal/api-v1/users/*
 
 internal:
   auth-token: ${INTERNAL_AUTH_TOKEN:auth-service-internal-token}
