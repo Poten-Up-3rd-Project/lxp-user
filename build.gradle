@@ -7,7 +7,7 @@ plugins {
 ext {
     springCloudVersion = "2025.0.1"
     commonLibVersion = "v1.1.0"
-    passportLibVersion = "v1.1.6"
+    passportLibVersion = "v1.2.0"
 }
 
 group = 'com.lxp'
@@ -59,8 +59,7 @@ dependencies {
     implementation "com.github.Poten-Up-3rd-Project.common-lib:common-infrastructure:$commonLibVersion"
 
     //passport
-    implementation "com.github.Poten-Up-3rd-Project.passport-lib:passport-core:$passportLibVersion"
-    implementation "com.github.Poten-Up-3rd-Project.passport-lib:passport-bean:$passportLibVersion"
+    implementation "com.github.Poten-Up-3rd-Project.passport-lib:passport-starter:$passportLibVersion"
     implementation "com.github.Poten-Up-3rd-Project.passport-lib:passport-authorization:$passportLibVersion"
 
     //docker
