@@ -31,11 +31,7 @@ public class IntegrationEventMapper implements DomainEventToIntegrationEventConv
      * `@TransactionalEventListener`에서 호출됨
      */
     public List<IntegrationEvent> toIntegrationEvents(BaseDomainEvent event) {
-        return List.of(toIntegrationEvent(event));
-    }
-
-    public IntegrationEvent toIntegrationEvent(BaseDomainEvent event) {
-        return toIntegration(event);
+        return List.of(convert(event));
     }
 
     public IntegrationEvent toIntegration(BaseDomainEvent event) {
