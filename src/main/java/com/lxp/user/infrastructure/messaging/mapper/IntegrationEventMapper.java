@@ -1,14 +1,12 @@
 package com.lxp.user.infrastructure.messaging.mapper;
 
-import com.lxp.common.domain.event.BaseDomainEvent;
 import com.lxp.common.application.event.IntegrationEvent;
-import java.util.UUID;
+import com.lxp.common.domain.event.BaseDomainEvent;
 import com.lxp.user.application.event.integration.UserRegisteredRecommendIntegrationEvent;
-import com.lxp.user.application.event.integration.UserUpdatedCourseIntegrationEvent;
-import com.lxp.user.application.event.integration.UserUpdatedRecommendIntegrationEvent;
+import com.lxp.user.application.event.integration.UserUpdatedIntegrationEvent;
 import com.lxp.user.application.event.integration.UserWithdrawnRecommendIntegrationEvent;
-import com.lxp.user.application.event.payload.UserCoursePayload;
-import com.lxp.user.application.event.payload.UserRecommendPayload;
+import com.lxp.user.application.event.payload.UserCreatedPayload;
+import com.lxp.user.application.event.payload.UserUpdatedPayload;
 import com.lxp.user.application.event.payload.UserWithdrawnPayload;
 import com.lxp.user.application.port.required.DomainEventToIntegrationEventConverter;
 import com.lxp.user.domain.user.event.UserCreatedEvent;
@@ -16,8 +14,8 @@ import com.lxp.user.domain.user.event.UserUpdatedEvent;
 import com.lxp.user.domain.user.event.UserWithdrawEvent;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Component("userIntegrationEventMapper")
 public class IntegrationEventMapper implements DomainEventToIntegrationEventConverter {
@@ -29,23 +27,10 @@ public class IntegrationEventMapper implements DomainEventToIntegrationEventConv
 
     /**
      * CrudEvent를 IntegrationEvent로 변환
-     * @TransactionalEventListener에서 호출됨
-     * UserUpdatedEvent는 recommend는 항상 + course는 UpdateType에 따라 선택적
+     *
+     * `@TransactionalEventListener`에서 호출됨
      */
     public List<IntegrationEvent> toIntegrationEvents(BaseDomainEvent event) {
-        if (event instanceof UserUpdatedEvent userUpdatedEvent) {
-            List<IntegrationEvent> events = new ArrayList<>();
-            
-            // recommend는 항상 보냄
-            events.add(toUserUpdatedRecommendIntegration(userUpdatedEvent));
-            
-            // course는 profile 업데이트가 되면 발송 (USER 만 돐된 경우 제외)
-            if (userUpdatedEvent.getUpdateType() != UserUpdatedEvent.UpdateType.USER) {
-                events.add(toUserUpdatedCourseIntegration(userUpdatedEvent));
-            }
-            
-            return events;
-        }
         return List.of(toIntegrationEvent(event));
     }
 
@@ -71,7 +56,7 @@ public class IntegrationEventMapper implements DomainEventToIntegrationEventConv
             event.getOccurredAt(),
             event.getEventId(),
             null,
-            new UserRecommendPayload(
+            new UserCreatedPayload(
                 event.getAggregateId(),
                 event.getTags(),
                 event.getLevel()
@@ -79,37 +64,26 @@ public class IntegrationEventMapper implements DomainEventToIntegrationEventConv
         );
     }
 
-    private UserUpdatedRecommendIntegrationEvent toUserUpdatedIntegration(UserUpdatedEvent event) {
-        return toUserUpdatedRecommendIntegration(event);
+    private UserUpdatedIntegrationEvent toUserUpdatedIntegration(UserUpdatedEvent event) {
+        return toUserUpdatedIntegrationEvent(event);
     }
 
-    private UserUpdatedRecommendIntegrationEvent toUserUpdatedRecommendIntegration(UserUpdatedEvent event) {
-        return new UserUpdatedRecommendIntegrationEvent(
+    private UserUpdatedIntegrationEvent toUserUpdatedIntegrationEvent(UserUpdatedEvent event) {
+        return new UserUpdatedIntegrationEvent(
             UUID.randomUUID().toString(),
             event.getOccurredAt(),
             event.getEventId(),
             null,
-            new UserRecommendPayload(
+            new UserUpdatedPayload(
                 event.getAggregateId(),
+                event.getEmail(),
+                event.getName(),
                 event.getTags(),
                 event.getLevel()
             )
         );
     }
 
-    private UserUpdatedCourseIntegrationEvent toUserUpdatedCourseIntegration(UserUpdatedEvent event) {
-        return new UserUpdatedCourseIntegrationEvent(
-            UUID.randomUUID().toString(),
-            event.getOccurredAt(),
-            event.getEventId(),
-            null,
-            new UserCoursePayload(
-                event.getAggregateId(),
-                event.getEmail(),      // User update 또는 All update 시에만 포함, 아니면 null
-                event.getName()        // User update 또는 All update 시에만 포함, 아니면 null
-            )
-        );
-    }
     private UserWithdrawnRecommendIntegrationEvent toUserWithdrawnIntegration(UserWithdrawEvent event) {
         return new UserWithdrawnRecommendIntegrationEvent(
             event.getEventId(),

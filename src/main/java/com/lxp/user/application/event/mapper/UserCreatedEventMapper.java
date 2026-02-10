@@ -2,7 +2,7 @@ package com.lxp.user.application.event.mapper;
 
 import com.lxp.common.application.event.IntegrationEvent;
 import com.lxp.user.application.event.integration.UserRegisteredRecommendIntegrationEvent;
-import com.lxp.user.application.event.payload.UserRecommendPayload;
+import com.lxp.user.application.event.payload.UserCreatedPayload;
 import com.lxp.user.domain.user.event.UserCreatedEvent;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +16,7 @@ public class UserCreatedEventMapper implements EventToIntegrationMapper<UserCrea
             event.getOccurredAt(),
             event.getEventId(),
             null,
-            new UserRecommendPayload(
+            new UserCreatedPayload(
                 event.getAggregateId(),
                 event.getTags(),
                 event.getLevel()
