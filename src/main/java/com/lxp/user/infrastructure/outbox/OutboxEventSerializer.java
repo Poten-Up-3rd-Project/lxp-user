@@ -4,8 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lxp.common.application.event.IntegrationEvent;
 import com.lxp.common.infrastructure.persistence.OutboxEvent;
 import com.lxp.user.application.event.integration.UserRegisteredRecommendIntegrationEvent;
-import com.lxp.user.application.event.integration.UserUpdatedCourseIntegrationEvent;
-import com.lxp.user.application.event.integration.UserUpdatedRecommendIntegrationEvent;
+import com.lxp.user.application.event.integration.UserUpdatedIntegrationEvent;
 import com.lxp.user.application.event.integration.UserWithdrawnRecommendIntegrationEvent;
 import com.lxp.user.infrastructure.messaging.exception.EventSerializationException;
 import lombok.RequiredArgsConstructor;
@@ -37,8 +36,7 @@ public class OutboxEventSerializer {
     Class<? extends IntegrationEvent> resolveEventClass(String eventType) {
         return switch (eventType) {
             case "user.created" -> UserRegisteredRecommendIntegrationEvent.class;
-            case "user.updated.recommend" -> UserUpdatedRecommendIntegrationEvent.class;
-            case "user.updated.course" -> UserUpdatedCourseIntegrationEvent.class;
+            case "user.updated" -> UserUpdatedIntegrationEvent.class;
             case "user.deleted" -> UserWithdrawnRecommendIntegrationEvent.class;
             default -> throw new IllegalArgumentException("Unknown event type: " + eventType);
         };

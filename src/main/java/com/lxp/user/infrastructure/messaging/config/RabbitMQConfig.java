@@ -1,6 +1,5 @@
 package com.lxp.user.infrastructure.messaging.config;
 
-import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
@@ -11,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
+    /*
     public static final String EXCHANGE_NAME = "user.events";
     public static final String QUEUE_NAME = "user.events.queue";
 
@@ -31,6 +31,7 @@ public class RabbitMQConfig {
             .to(userEventsExchange)
             .with("#"); // 모든 routing key를 받음
     }
+    */
 
     @Bean
     public MessageConverter jsonMessageConverter() {
