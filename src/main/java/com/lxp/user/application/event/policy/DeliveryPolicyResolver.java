@@ -14,12 +14,11 @@ public class DeliveryPolicyResolver {
      * todo recommend 완료되면 수정할 것
      */
     public DeliveryPolicy resolve(BaseDomainEvent event) {
-        return DeliveryPolicy.FIRE_AND_FORGET;
-//        String eventType = event.getClass().getSimpleName();
-//
-//        return switch (eventType) {
-//            case "UserCreatedEvent", "UserUpdatedEvent", "UserWithdrawEvent" -> DeliveryPolicy.OUTBOX_REQUIRED;
-//            default -> DeliveryPolicy.FIRE_AND_FORGET;
-//        };
+        String eventType = event.getClass().getSimpleName();
+
+        return switch (eventType) {
+            case "UserCreatedEvent", "UserUpdatedEvent", "UserWithdrawEvent" -> DeliveryPolicy.OUTBOX_REQUIRED;
+            default -> DeliveryPolicy.FIRE_AND_FORGET;
+        };
     }
 }

@@ -23,7 +23,7 @@ public class OutboxPollingScheduler {
     private static final int BATCH_SIZE = 100;
     private static final int MAX_RETRY_COUNT = 3;
 
-    @Scheduled(fixedDelayString = "${outbox.polling.interval:5000}")
+    @Scheduled(fixedDelayString = "${outbox.polling.interval:50000}")
     @Transactional
     public void pollAndPublish() {
         List<OutboxEvent> pendingEvents = outboxRepository
