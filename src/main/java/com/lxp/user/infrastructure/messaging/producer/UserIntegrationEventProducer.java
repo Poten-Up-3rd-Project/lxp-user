@@ -3,9 +3,11 @@ package com.lxp.user.infrastructure.messaging.producer;
 import com.lxp.common.application.event.IntegrationEvent;
 import com.lxp.common.application.port.out.IntegrationEventPublisher;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class UserIntegrationEventProducer implements IntegrationEventPublisher {
@@ -21,6 +23,7 @@ public class UserIntegrationEventProducer implements IntegrationEventPublisher {
 
     @Override
     public void publish(String topic, IntegrationEvent integrationEvent) {
+        log.info("event publish -> topic: {}, integrationEvent: {}, eventType: {}", topic, integrationEvent, integrationEvent.getEventType());
         rabbitTemplate.convertAndSend(topic, integrationEvent.getEventType(), integrationEvent);
     }
 }
