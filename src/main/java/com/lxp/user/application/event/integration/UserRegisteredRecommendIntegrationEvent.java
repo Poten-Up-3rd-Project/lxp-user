@@ -23,6 +23,7 @@ public class UserRegisteredRecommendIntegrationEvent extends BaseIntegrationEven
     }
 
     @Override
+    @JsonProperty("eventType")
     public String getEventType() {
         return "user.created";
     }

@@ -25,6 +25,7 @@ public class UserWithdrawnRecommendIntegrationEvent extends BaseIntegrationEvent
     }
 
     @Override
+    @JsonProperty("eventType")
     public String getEventType() {
         return "user.deleted";
     }

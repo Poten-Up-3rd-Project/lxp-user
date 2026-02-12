@@ -25,6 +25,7 @@ public class UserUpdatedIntegrationEvent extends BaseIntegrationEventEnvelope<Us
     }
 
     @Override
+    @JsonProperty("eventType")
     public String getEventType() {
         return "user.updated";
     }
