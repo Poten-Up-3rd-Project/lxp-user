@@ -23,7 +23,13 @@ public class UserIntegrationEventProducer implements IntegrationEventPublisher {
 
     @Override
     public void publish(String topic, IntegrationEvent integrationEvent) {
-        log.info("event publish -> topic: {}, integrationEvent: {}, eventType: {}", topic, integrationEvent, integrationEvent.getEventType());
-        rabbitTemplate.convertAndSend(topic, integrationEvent.getEventType(), integrationEvent);
+        String routingKey = integrationEvent.getEventType();
+        log.info("Publishing -> exchange={}, routingKey={}, eventId={}, source={}",
+            topic, routingKey, integrationEvent.getEventId(), integrationEvent.getSource());
+
+        rabbitTemplate.convertAndSend(topic, routingKey, integrationEvent, m -> {
+            m.getMessageProperties().setHeader("eventType", routingKey);
+            return m;
+        });
     }
 }
