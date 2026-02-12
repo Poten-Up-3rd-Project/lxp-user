@@ -5,7 +5,7 @@ import com.lxp.user.domain.common.event.CrudEvent;
 
 public class UserWithdrawEvent extends BaseDomainEvent implements CrudEvent {
 
-    protected UserWithdrawEvent(String aggregateId) {
+    public UserWithdrawEvent(String aggregateId) {
         super(aggregateId);
     }
 
